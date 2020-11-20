@@ -20,7 +20,8 @@ namespace ConsultaCEP
                 switch(task){
                     case 1:
                         //Console.WriteLine(new Endereco("555-000", "Logradouro madureira", "casa", "Alto da Banana", "Pernambuco", "PE", "555", "123", 81, 12).ToString());
-                        RunAsync().GetAwaiter().GetResult();
+                        var cep = InputCep();
+                        RunAsync(cep).GetAwaiter().GetResult();
                     break;
                     default:
                         Console.WriteLine("Opção inválida");
@@ -35,6 +36,7 @@ namespace ConsultaCEP
 
         public static string Menu()
         {
+            Console.WriteLine("");
             Console.WriteLine("#-------------------- Menu ----------------------#");
             Console.WriteLine("#                                                #");
             Console.WriteLine("# 1 - Consultar CEP                              #");
@@ -46,19 +48,38 @@ namespace ConsultaCEP
             return option.ToUpper();
         }
 
-         static async Task RunAsync()
+         static async Task RunAsync(string cep)
         {   
+
             if(Internet.isOnline())
             {
 
                 Console.WriteLine("Verificando CEP...");
-                var result  = await Client.Client.GetEnderecoAsync("01001000");
+                var result  = await Client.Client.GetEnderecoAsync(cep);
 
             }else{
 
                 Console.WriteLine("\nNecessário conexão com a internet para realizar esta operação...");
 
             }
+        }
+
+        static string InputCep(){
+
+            Console.WriteLine("Informe o CEP a ser buscado:");
+            var cep = Console.ReadLine();
+
+            while(String.IsNullOrEmpty(cep)){
+                Console.WriteLine("Necessário informar um CEP!");
+                InputCep();
+            }
+
+            if(!FormatValidation.ValidaCep()){
+                Console.WriteLine("Fomato de CEP inválido!");
+                InputCep();
+            }
+
+            return cep;
         }
     }
 }
