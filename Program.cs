@@ -74,8 +74,13 @@ namespace ConsultaCEP
                 InputCep();
             }
 
-            if(!FormatValidation.ValidaCep()){
+            if(FormatValidation.ValidaFormatoCep(cep) == false){
                 Console.WriteLine("Fomato de CEP inválido!");
+                InputCep();
+            }
+            
+            if(FormatValidation.ValidaCep(cep) == true){
+                Console.WriteLine("CEP inválido!");
                 InputCep();
             }
 
