@@ -19,9 +19,7 @@ namespace ConsultaCEP
 
                 switch(task){
                     case 1:
-                        //Console.WriteLine(new Endereco("555-000", "Logradouro madureira", "casa", "Alto da Banana", "Pernambuco", "PE", "555", "123", 81, 12).ToString());
-                        var cep = InputCep();
-                        RunAsync(cep).GetAwaiter().GetResult();
+                       searchCep();
                     break;
                     default:
                         Console.WriteLine("Opção inválida");
@@ -46,6 +44,19 @@ namespace ConsultaCEP
             Console.WriteLine("\nInforme a opção para prosseguir: ");
             var option = Console.ReadLine();
             return option.ToUpper();
+        }
+
+        public static void searchCep()
+        {
+
+            var cep = InputCep();
+
+            try{
+                RunAsync(cep).GetAwaiter().GetResult();
+            }catch(Exception e){
+                Console.WriteLine("Uma exceção ocorreu:" + e.Message);
+            }
+
         }
 
          static async Task RunAsync(string cep)
