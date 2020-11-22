@@ -22,26 +22,28 @@ namespace ConsultaCEP
                        searchCep();
                     break;
                     default:
-                        Console.WriteLine("Opção inválida");
+                        CustomConsole.WriteError("Opção inválida");
                     break;
                 }
 
                 option = Menu();
 
             }
+
             Console.WriteLine("\nPrograma Finalizado");
+
         }
 
         public static string Menu()
         {
-            Console.WriteLine("");
-            Console.WriteLine("#-------------------- Menu ----------------------#");
-            Console.WriteLine("#                                                #");
-            Console.WriteLine("# 1 - Consultar CEP                              #");
-            Console.WriteLine("# X - Sair da Aplicação                          #");
-            Console.WriteLine("#                                                #");
-            Console.WriteLine("#------------------------------------------------#");
-            Console.WriteLine("\nInforme a opção para prosseguir: ");
+            CustomConsole.WriteLine("");
+            CustomConsole.WriteLine("#-------------------- Menu ----------------------#");
+            CustomConsole.WriteLine("#                                                #");
+            CustomConsole.WriteLine("# 1 - Consultar CEP                              #");
+            CustomConsole.WriteLine("# X - Sair da Aplicação                          #");
+            CustomConsole.WriteLine("#                                                #");
+            CustomConsole.WriteLine("#------------------------------------------------#");
+            CustomConsole.WriteLine("\nInforme a opção para prosseguir:");
             var option = Console.ReadLine();
             return option.ToUpper();
         }
@@ -54,7 +56,7 @@ namespace ConsultaCEP
             try{
                 RunAsync(cep).GetAwaiter().GetResult();
             }catch(Exception e){
-                Console.WriteLine("Uma exceção ocorreu:" + e.Message);
+                CustomConsole.WriteError("Uma exceção ocorreu:" + e.Message);
             }
 
         }
@@ -62,39 +64,39 @@ namespace ConsultaCEP
          static async Task RunAsync(string cep)
         {   
 
-            Console.WriteLine("Checando conexão...");
+            CustomConsole.WriteLine("Checando conexão...");
 
             if(Internet.isOnline())
             {
 
-                Console.WriteLine("Verificando CEP...");
+                CustomConsole.WriteLine("Verificando CEP...");
                 var result  = await Client.Client.GetEnderecoAsync(cep);
-                Console.WriteLine(result.ToString());
+                CustomConsole.DefaultWriteLine("Resultado:\n" + result.ToString());
 
             }else{
 
-                Console.WriteLine("\nNecessário conexão com a internet para realizar esta operação...");
+                CustomConsole.WriteError("\nNecessário conexão com a internet para realizar esta operação...");
 
             }
         }
 
         static string InputCep(){
 
-            Console.WriteLine("Informe o CEP a ser buscado:");
+            CustomConsole.WriteLine("Informe o CEP a ser buscado:");
             var cep = Console.ReadLine();
 
             while(String.IsNullOrEmpty(cep)){
-                Console.WriteLine("Necessário informar um CEP!");
+                CustomConsole.WriteError("Necessário informar um CEP!");
                 InputCep();
             }
 
             if(FormatValidation.ValidaFormatoCep(cep) == false){
-                Console.WriteLine("Fomato de CEP inválido!");
+                CustomConsole.WriteError("Fomato de CEP inválido!");
                 InputCep();
             }
             
             if(FormatValidation.ValidaCep(cep) == true){
-                Console.WriteLine("CEP inválido!");
+                CustomConsole.WriteError("CEP inválido!");
                 InputCep();
             }
 
