@@ -12,8 +12,10 @@ namespace ConsultaCEP.Client {
         public static async Task<Endereco> GetEnderecoAsync(string value)
         {   
             
-            client.BaseAddress = new Uri("https://viacep.com.br/ws/");
-
+            if(client.BaseAddress == null){
+                client.BaseAddress = new Uri("https://viacep.com.br/ws/");
+            }
+            
             Endereco endereco = null;
 
             HttpResponseMessage response = await client.GetAsync(value + "/json");
@@ -21,7 +23,8 @@ namespace ConsultaCEP.Client {
             if (response.IsSuccessStatusCode)
             {
                 var stringRes = await response.Content.ReadAsStringAsync();
-                endereco = JsonSerializer.Deserialize<Endereco>(stringRes);
+                var formatedJson = stringRes.Replace("\n", "");
+                endereco = JsonSerializer.Deserialize<Endereco>(formatedJson);
             }
 
             return endereco;

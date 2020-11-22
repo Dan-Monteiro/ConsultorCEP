@@ -5,9 +5,9 @@ namespace ConsultaCEP.Entities{
     class Endereco
     {
         [JsonPropertyName("cep")]
-        private string Cep { get; set; }
+        public string Cep { get; set; }
         [JsonPropertyName("logradouro")]
-        private string Logradouro { get; set; }
+        public string Logradouro { get; set; }
         [JsonPropertyName("complemento")]
         public string Complemento { get; set; }
         [JsonPropertyName("bairro")]
