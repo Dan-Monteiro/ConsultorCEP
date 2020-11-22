@@ -62,11 +62,14 @@ namespace ConsultaCEP
          static async Task RunAsync(string cep)
         {   
 
+            Console.WriteLine("Checando conexão...");
+
             if(Internet.isOnline())
             {
 
                 Console.WriteLine("Verificando CEP...");
                 var result  = await Client.Client.GetEnderecoAsync(cep);
+                Console.WriteLine(result.ToString());
 
             }else{
 

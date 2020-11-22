@@ -1,21 +1,35 @@
-using System;
-using System.Reflection;
+using System.Text.Json.Serialization;
 
 namespace ConsultaCEP.Entities{
 
     class Endereco
     {
+        [JsonPropertyName("cep")]
         private string Cep { get; set; }
+        [JsonPropertyName("logradouro")]
         private string Logradouro { get; set; }
+        [JsonPropertyName("complemento")]
         public string Complemento { get; set; }
+        [JsonPropertyName("bairro")]
         public string Bairro { get; set; }
+        [JsonPropertyName("localidade")]
         public string Localidade { get; set; }
+        [JsonPropertyName("uf")]
         public string Uf { get; set; }
+        [JsonPropertyName("ibge")]
         public string Ibge { get; set; }
+        [JsonPropertyName("gia")]
         public string Gia { get; set; }
-        public int Ddd { get; set; }
-        public int Siafi { get; set; }
-        public Endereco(string cep, string logradouro, string complemento, string bairro, string localidade, string uf, string ibge, string gia, int ddd, int siafi ){
+        [JsonPropertyName("ddd")]
+        public string Ddd { get; set; }
+        [JsonPropertyName("siafi")]
+        public string Siafi { get; set; }
+
+        public Endereco(){
+            //Leave empty for json serialization
+        }
+
+        public Endereco(string cep, string logradouro, string complemento, string bairro, string localidade, string uf, string ibge, string gia, string ddd, string siafi ){
             Cep = cep;
             Logradouro = logradouro;
             Complemento = complemento;
@@ -29,7 +43,7 @@ namespace ConsultaCEP.Entities{
         }
 
         public override string ToString(){
-            return $"[CEP: {Cep} \nLogradouro: {Logradouro} \nComplemento: {Complemento}\nBairro: {Bairro}\nLocalidade: {Localidade}\nUF: {Uf}\n IBGE: {Ibge}\nGia: {Gia}\nDDD: {Ddd}\nSiafi: {Siafi}].";
+            return $"[\nCEP: {Cep} \nLogradouro: {Logradouro} \nComplemento: {Complemento}\nBairro: {Bairro}\nLocalidade: {Localidade}\nUF: {Uf}\nIBGE: {Ibge}\nGia: {Gia}\nDDD: {Ddd}\nSiafi: {Siafi}\n]";
         }
     }
 }

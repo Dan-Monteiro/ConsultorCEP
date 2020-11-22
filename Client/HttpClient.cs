@@ -2,6 +2,7 @@ using System;
 using ConsultaCEP.Entities;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Text.Json;
 
 namespace ConsultaCEP.Client {
 
@@ -19,7 +20,8 @@ namespace ConsultaCEP.Client {
 
             if (response.IsSuccessStatusCode)
             {
-                var algo = await response.Content.ReadAsStringAsync();
+                var stringRes = await response.Content.ReadAsStringAsync();
+                endereco = JsonSerializer.Deserialize<Endereco>(stringRes);
             }
 
             return endereco;
